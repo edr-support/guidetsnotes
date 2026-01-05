@@ -43,6 +43,7 @@
     },
     {
           "id": "hardware_requirements",
+          "title": "Hardware Requirements",
           "label": "Does the device meet the hardware requirements (https://edr.datto.com/help/Content/01-getting-started/hardware-os-requirements.htm)?",
           "type": "select",
           "required": true,
