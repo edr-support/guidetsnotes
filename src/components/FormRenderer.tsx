@@ -3,20 +3,9 @@ import { useInvestigationStore } from '../store/useInvestigationStore';
 export const FormRenderer = () => {
   const { activeSchema, currentStepIndex, answers, setAnswer } = useInvestigationStore();
 
-  if (!activeSchema || !activeSchema.steps) {
-    return <div className="p-4 text-gray-500">Loading form structure...</div>;
-  }
-
+  if (!activeSchema || !activeSchema.steps) return null;
   const step = activeSchema.steps[currentStepIndex];
-
-  // SAFETY CHECK: If the step doesn't exist, show an error instead of crashing
-  if (!step) {
-    return (
-      <div className="p-8 text-center border-2 border-dashed border-red-200 rounded-2xl">
-        <p className="text-red-500 font-bold">Error: Step {currentStepIndex + 1} not found in schema.</p>
-      </div>
-    );
-  }
+  if (!step) return null;
 
   return (
     <div className="space-y-8">
@@ -25,29 +14,25 @@ export const FormRenderer = () => {
         <p className="text-slate-500 text-sm mt-1">{step.description}</p>
       </div>
 
-      {/* SAFETY CHECK: Ensure fields is an array before calling .map() */}
       {(step.fields || []).map((field) => (
         <div key={field.id} className="flex flex-col space-y-3">
           <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-            {field.label} 
-            {field.required && <span className="text-red-500" title="Required">*</span>}
+            {field.label} {field.required && <span className="text-red-500">*</span>}
           </label>
 
-          {/* TEXT INPUT */}
           {field.type === 'text' && (
             <input
               type="text"
-              className="border border-slate-200 p-3 rounded-xl shadow-sm focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all bg-slate-50/50"
+              className="border border-slate-200 p-3 rounded-xl shadow-sm focus:ring-4 focus:ring-blue-100 outline-none transition-all bg-slate-50/50"
               value={answers[field.id] || ''}
               onChange={(e) => setAnswer(field.id, e.target.value)}
               placeholder={field.placeholder}
             />
           )}
 
-          {/* SELECT INPUT */}
           {field.type === 'select' && (
             <select
-              className="border border-slate-200 p-3 rounded-xl bg-slate-50/50 shadow-sm outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500"
+              className="border border-slate-200 p-3 rounded-xl bg-slate-50/50 shadow-sm outline-none focus:ring-4 focus:ring-blue-100"
               value={answers[field.id] || ''}
               onChange={(e) => setAnswer(field.id, e.target.value)}
             >
@@ -58,19 +43,15 @@ export const FormRenderer = () => {
             </select>
           )}
 
-          {/* TEXTAREA & CODE */}
           {(field.type === 'textarea' || field.type === 'code') && (
             <textarea
-              className={`border border-slate-200 p-4 rounded-xl h-40 shadow-sm outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all bg-slate-50/50 ${
-                field.type === 'code' ? 'font-mono text-sm' : ''
-              }`}
+              className={`border border-slate-200 p-4 rounded-xl h-40 shadow-sm outline-none focus:ring-4 focus:ring-blue-100 transition-all bg-slate-50/50 ${field.type === 'code' ? 'font-mono text-sm' : ''}`}
               value={answers[field.id] || ''}
               onChange={(e) => setAnswer(field.id, e.target.value)}
               placeholder={field.placeholder}
             />
           )}
 
-          {/* IMAGE UPLOADER */}
           {field.type === 'image' && (
             <div className="space-y-4">
               <input
@@ -89,10 +70,7 @@ export const FormRenderer = () => {
               {answers[field.id] && (
                 <div className="relative inline-block">
                   <img src={answers[field.id]} alt="Preview" className="h-40 rounded-xl border-2 border-blue-50 shadow-md" />
-                  <button 
-                    onClick={() => setAnswer(field.id, null)}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px] shadow-lg"
-                  >✕</button>
+                  <button onClick={() => setAnswer(field.id, null)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-[10px]">✕</button>
                 </div>
               )}
             </div>
