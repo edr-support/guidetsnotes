@@ -2,8 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #f9fafb;
+@layer base {
+  body {
+    @apply text-slate-900;
+  }
+}
+
+/* Print Logic */
+@media print {
+  /* Hide the UI elements when printing */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Reset the background and padding for the paper */
+  body {
+    background-color: white !important;
+    padding: 0 !important;
+  }
+
+  .print-report {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure images show up and don't get cut in half */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    display: block;
+    margin-top: 10px;
+  }
+
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
 }
