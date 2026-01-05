@@ -1,11 +1,11 @@
 {
-  "id": "datto-edr-complete-workflow",
-  "title": "Datto EDR Resource Investigation",
+  "id": "resource-usage-v1",
+  "title": "High Resource Usage Investigation",
   "steps": [
     {
       "id": "triage",
       "title": "Initial Triage",
-      "description": "Identify which resource is under pressure and system details.",
+      "description": "Identify the environment and resource pressure.",
       "fields": [
         {
           "id": "resource_type",
@@ -27,195 +27,56 @@
         },
         {
           "id": "customer_tenant",
-          "label": "EDR Tenant",
+          "label": "EDR Tenant URL",
           "type": "text",
           "required": true,
           "placeholder": "e.g. cname.infocyte.com"
-        },
-        {
-          "id": "drmm_access",
-          "label": "RMM Support Access",
-          "type": "text",
-          "required": true,
-          "placeholder": "e.g. Support Access Expires: "
         }
       ]
     },
     {
-          "id": "hardware_requirements",
-          "title": "Hardware Requirements",
-          "label": "Does the device meet the hardware requirements (https://edr.datto.com/help/Content/01-getting-started/hardware-os-requirements.htm)?",
+      "id": "hardware",
+      "title": "Hardware Requirements",
+      "description": "Check minimum system specs.",
+      "fields": [
+        {
+          "id": "meets_requirements",
+          "label": "Does the device meet requirements? (https://edr.datto.com/help/Content/01-getting-started/hardware-os-requirements.htm)",
           "type": "select",
           "required": true,
           "options": [
-            { "label": "Yes - Meets/Exceeds Requirements", "value": "yes" },
-            { "label": "No - Below Minimum Requirements", "value": "no" }
+            { "label": "Yes - Meets Requirements", "value": "yes" },
+            { "label": "No - Below Minimums", "value": "no" }
           ]
-        },
+        }
+      ]
+    },
     {
-      "id": "initial_evidence",
+      "id": "evidence",
       "title": "Initial Evidence",
-      "description": "Capture the current system state.",
+      "description": "Capture system state.",
       "fields": [
         {
           "id": "screenshot_upload",
-          "label": "Evidence Screenshot (Task Manager / htop)",
+          "label": "Upload Screenshot (Task Manager/HTOP)",
           "type": "image",
           "required": false
         },
         {
           "id": "top_output",
-          "label": "Paste 'top' or 'htop' output",
+          "label": "Process List Output (CLI)",
           "type": "code",
-          "required": true,
-          "placeholder": "Paste terminal output here..."
+          "required": false
         }
       ]
     },
-    {
-      "id": "location_setup",
-      "title": "Troubleshooting Location",
-      "description": "Initial environment preparation.",
-      "fields": [
-        {
-          "id": "location_created",
-          "label": "Have you created a troubleshooting location in Datto EDR? (All policies disabled)",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "location_url",
-          "label": "Location URL",
-          "type": "text",
-          "placeholder": "Paste Datto EDR Location URL here"
-        }
-      ]
-    },
-    {
-      "id": "edr_policy_test",
-      "title": "EDR Policy Test",
-      "description": "Enable EDR Policy (Real-time monitoring DISABLED).",
-      "fields": [
-        {
-          "id": "edr_issue",
-          "label": "Does resource use or application incompatibility begin?",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "edr_screenshot",
-          "label": "Attach Screenshot of issue",
-          "type": "image"
-        },
-        {
-          "id": "edr_logs",
-          "label": "Did you fetch logs?",
-          "type": "select",
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        }
-      ]
-    },
-    {
-      "id": "rtm_test",
-      "title": "Real-Time Monitoring",
-      "description": "Enable Real-time monitoring in the EDR policy.",
-      "fields": [
-        {
-          "id": "rtm_issue",
-          "label": "Does resource use or application incompatibility begin?",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "rtm_screenshot",
-          "label": "Attach Screenshot",
-          "type": "image"
-        },
-        {
-          "id": "rtm_logs",
-          "label": "Did you fetch logs?",
-          "type": "select",
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        }
-      ]
-    },
-    {
-      "id": "ransomware_test",
-      "title": "Ransomware Policy",
-      "description": "Enable Ransomware policy (Rollback DISABLED).",
-      "fields": [
-        {
-          "id": "ransom_issue",
-          "label": "Does resource use or application incompatibility begin?",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "ransom_screenshot",
-          "label": "Attach Screenshot",
-          "type": "image"
-        },
-        {
-          "id": "ransom_logs",
-          "label": "Did you fetch logs?",
-          "type": "select",
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        }
-      ]
-    },
-    {
-      "id": "rollback_test",
-      "title": "Rollback Test",
-      "description": "Enable Rollback in the Ransomware policy.",
-      "fields": [
-        {
-          "id": "rollback_issue",
-          "label": "Does resource use or application incompatibility begin?",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "rollback_screenshot",
-          "label": "Attach Screenshot",
-          "type": "image"
-        },
-        {
-          "id": "rollback_logs",
-          "label": "Did you fetch logs?",
-          "type": "select",
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        }
-      ]
-    },
-    {
-      "id": "av_alert",
-      "title": "AV: Alert Only",
-      "fields": [
-        { "id": "av_alert_issue", "label": "Datto AV [Alert Only]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
-        { "id": "av_alert_scr", "label": "Attach screenshot", "type": "image" },
-        { "id": "av_alert_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
-      ]
-    },
-    {
-      "id": "av_rtp",
-      "title": "AV: Real Time Protection",
-      "fields": [
-        { "id": "av_rtp_issue", "label": "Datto AV [Real Time Protection]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
-        { "id": "av_rtp_scr", "label": "Attach screenshot", "type": "image" }
-      ]
-    },
-    {
-      "id": "av_dns",
-      "title": "AV: Protection/DNS Secure",
-      "fields": [
-        { "id": "av_dns_issue", "label": "Datto AV [Protection/DNS Secure]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
-        { "id": "av_dns_scr", "label": "Attach screenshot", "type": "image" }
-      ]
-    }
+    { "id": "location", "title": "Troubleshooting Location", "fields": [{ "id": "loc_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "policy_test", "title": "EDR Policy Test", "fields": [{ "id": "pol_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "monitoring", "title": "Real-Time Monitoring", "fields": [{ "id": "mon_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "ransomware", "title": "Ransomware Policy", "fields": [{ "id": "ran_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "rollback", "title": "Rollback Test", "fields": [{ "id": "rol_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "av_alert", "title": "AV: Alert Only", "fields": [{ "id": "ava_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "av_rtp", "title": "AV: Real Time Protection", "fields": [{ "id": "avp_note", "label": "Notes", "type": "textarea" }] },
+    { "id": "av_dns", "title": "AV: Protection/DNS Secure", "fields": [{ "id": "avd_note", "label": "Notes", "type": "textarea" }] }
   ]
 }
