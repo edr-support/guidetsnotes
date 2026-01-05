@@ -5,15 +5,11 @@ interface InvestigationState {
   activeSchema: InvestigationSchema | null;
   answers: Record<string, any>;
   currentStepIndex: number;
-  
-  // Actions
   setSchema: (schema: InvestigationSchema) => void;
   setAnswer: (fieldId: string, value: any) => void;
   nextStep: () => void;
   prevStep: () => void;
   goToStep: (index: number) => void;
-  
-  // Logic Helpers
   isStepComplete: (stepIndex: number) => boolean;
   canAccessStep: (stepIndex: number) => boolean;
 }
@@ -38,24 +34,23 @@ export const useInvestigationStore = create<InvestigationState>((set, get) => ({
   prevStep: () => set((state) => ({ currentStepIndex: Math.max(0, state.currentStepIndex - 1) })),
   goToStep: (index) => set({ currentStepIndex: index }),
 
-  // A step is complete if all 'required' fields have a value
-isStepComplete: (stepIndex) => {
-  const state = get();
-  if (!state.activeSchema) return false;
-  const step = state.activeSchema.steps[stepIndex];
-  
-  // Special logic for Evidence step: Check if either field has data
-  if (step.id === 'evidence') {
-    return !!state.answers['screenshot_upload'] || !!state.answers['top_output'];
-  }
+  isStepComplete: (stepIndex) => {
+    const state = get();
+    const step = state.activeSchema?.steps[stepIndex];
+    
+    // Safety check: if step or fields are missing, it's not complete (and won't crash)
+    if (!step || !step.fields) return false;
 
-  // Standard logic for other steps: All required must be filled
-  return step.fields
-    .filter(f => f.required)
-    .every(f => !!state.answers[f.id] && state.answers[f.id] !== '');
-},
+    // Special logic for Evidence step
+    if (step.id === 'evidence') {
+      return !!state.answers['screenshot_upload'] || !!state.answers['top_output'];
+    }
 
-  // A user can access a step if ALL previous steps are complete
+    return step.fields
+      .filter(f => f.required)
+      .every(f => !!state.answers[f.id] && state.answers[f.id] !== '');
+  },
+
   canAccessStep: (stepIndex) => {
     const state = get();
     if (stepIndex === 0) return true;

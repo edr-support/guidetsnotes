@@ -1,10 +1,13 @@
 import { InvestigationSchema } from '../types/schema';
 
 export const generateMarkdown = (schema: InvestigationSchema, answers: Record<string, any>) => {
-  let markdown = `# Investigation Report: ${schema.title}\n`;
-  markdown += `*Generated on: ${new Date().toLocaleString()}*\n\n---\n\n`;
+  let markdown = `# ${schema.title}\n`;
+  markdown += `*Report Generated: ${new Date().toLocaleString()}*\n\n---\n\n`;
 
   schema.steps.forEach((step) => {
+    const hasAnswers = step.fields.some(f => answers[f.id]);
+    if (!hasAnswers) return;
+
     markdown += `## ${step.title}\n`;
     
     step.fields.forEach((field) => {
@@ -16,7 +19,8 @@ export const generateMarkdown = (schema: InvestigationSchema, answers: Record<st
       if (field.type === 'code') {
         markdown += `\`\`\`\n${answer}\n\`\`\`\n\n`;
       } else if (field.type === 'image') {
-        markdown += `*Image evidence provided (see attached PDF or original form)*\n\n`;
+        // Embeds the Base64 image data directly into Markdown
+        markdown += `![Evidence Screenshot](${answer})\n\n`;
       } else {
         markdown += `${answer}\n\n`;
       }
