@@ -1,11 +1,11 @@
 {
-  "id": "resource-usage-v1",
-  "title": "High Resource Usage",
+  "id": "datto-edr-complete-workflow",
+  "title": "Datto EDR Resource Investigation",
   "steps": [
     {
       "id": "triage",
       "title": "Initial Triage",
-      "description": "Identify which resource is under pressure.",
+      "description": "Identify which resource is under pressure and system details.",
       "fields": [
         {
           "id": "resource_type",
@@ -42,9 +42,9 @@
       ]
     },
     {
-      "id": "evidence",
-      "title": "Evidence Collection",
-      "description": "Capture system state for the ticket.",
+      "id": "initial_evidence",
+      "title": "Initial Evidence",
+      "description": "Capture the current system state.",
       "fields": [
         {
           "id": "screenshot_upload",
@@ -58,6 +58,162 @@
           "type": "code",
           "required": true,
           "placeholder": "Paste terminal output here..."
+        }
+      ]
+    },
+    {
+      "id": "location_setup",
+      "title": "Troubleshooting Location",
+      "description": "Initial environment preparation.",
+      "fields": [
+        {
+          "id": "location_created",
+          "label": "Have you created a troubleshooting location in Datto EDR? (All policies disabled)",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "location_url",
+          "label": "Location URL",
+          "type": "text",
+          "placeholder": "Paste Datto EDR Location URL here"
+        }
+      ]
+    },
+    {
+      "id": "edr_policy_test",
+      "title": "EDR Policy Test",
+      "description": "Enable EDR Policy (Real-time monitoring DISABLED).",
+      "fields": [
+        {
+          "id": "edr_issue",
+          "label": "Does resource use or application incompatibility begin?",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "edr_screenshot",
+          "label": "Attach Screenshot of issue",
+          "type": "image"
+        },
+        {
+          "id": "edr_logs",
+          "label": "Did you fetch logs?",
+          "type": "select",
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        }
+      ]
+    },
+    {
+      "id": "rtm_test",
+      "title": "Real-Time Monitoring",
+      "description": "Enable Real-time monitoring in the EDR policy.",
+      "fields": [
+        {
+          "id": "rtm_issue",
+          "label": "Does resource use or application incompatibility begin?",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "rtm_screenshot",
+          "label": "Attach Screenshot",
+          "type": "image"
+        },
+        {
+          "id": "rtm_logs",
+          "label": "Did you fetch logs?",
+          "type": "select",
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        }
+      ]
+    },
+    {
+      "id": "ransomware_test",
+      "title": "Ransomware Policy",
+      "description": "Enable Ransomware policy (Rollback DISABLED).",
+      "fields": [
+        {
+          "id": "ransom_issue",
+          "label": "Does resource use or application incompatibility begin?",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "ransom_screenshot",
+          "label": "Attach Screenshot",
+          "type": "image"
+        },
+        {
+          "id": "ransom_logs",
+          "label": "Did you fetch logs?",
+          "type": "select",
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        }
+      ]
+    },
+    {
+      "id": "rollback_test",
+      "title": "Rollback Test",
+      "description": "Enable Rollback in the Ransomware policy.",
+      "fields": [
+        {
+          "id": "rollback_issue",
+          "label": "Does resource use or application incompatibility begin?",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "rollback_screenshot",
+          "label": "Attach Screenshot",
+          "type": "image"
+        },
+        {
+          "id": "rollback_logs",
+          "label": "Did you fetch logs?",
+          "type": "select",
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        }
+      ]
+    },
+    {
+      "id": "av_policy_test",
+      "title": "Antivirus Policy",
+      "description": "Test Datto AV phases sequentially.",
+      "fields": [
+        {
+          "id": "av_phase",
+          "label": "AV Configuration Attempted",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "label": "Alert Only", "value": "alert" },
+            { "label": "Real Time Protection", "value": "rtp" },
+            { "label": "Protection/DNS Secure", "value": "dns" }
+          ]
+        },
+        {
+          "id": "av_issue",
+          "label": "Does resource use or application incompatibility begin?",
+          "type": "select",
+          "required": true,
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
+        },
+        {
+          "id": "av_screenshot",
+          "label": "Attach Screenshot",
+          "type": "image"
+        },
+        {
+          "id": "av_logs",
+          "label": "Did you fetch logs?",
+          "type": "select",
+          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
         }
       ]
     }

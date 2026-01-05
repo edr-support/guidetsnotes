@@ -70,8 +70,8 @@ function App() {
 
   return (
     <div className="flex h-screen bg-slate-50">
-      {/* Existing Sidebar Logic */}
-      <aside className="w-72 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
+      {/* Sidebar Navigation */}
+      <aside className="w-72 bg-white border-r border-slate-200 flex flex-col hidden md:flex no-print">
          <div className="p-6 border-b border-slate-100">
           <h1 className="text-xl font-bold text-blue-600">SupportGuide</h1>
         </div>
@@ -81,38 +81,49 @@ function App() {
               key={step.id}
               disabled={!canAccessStep(idx)}
               onClick={() => goToStep(idx)}
-              className={`w-full text-left p-3 rounded-xl text-sm transition-all ${
-                currentStepIndex === idx ? 'bg-blue-600 text-white' : 'text-slate-600 hover:bg-slate-50'
+              className={`w-full text-left p-3 rounded-xl text-sm transition-all flex items-center gap-3 ${
+                currentStepIndex === idx ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-50'
               } disabled:opacity-30`}
             >
-              {idx + 1}. {step.title}
+              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border ${
+                currentStepIndex === idx ? 'bg-blue-500 border-blue-400' : 'border-slate-200'
+              }`}>
+                {idx + 1}
+              </span>
+              {step.title}
             </button>
           ))}
         </nav>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 bg-slate-50 overflow-y-auto">
-        <div className="flex flex-col items-center py-12 px-4 min-h-full">
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200">
-            <div className="p-10">
-              <FormRenderer />
-            </div>
-            <div className="px-8 py-6 bg-slate-50 border-t flex justify-between rounded-b-2xl">
-              <button onClick={prevStep} disabled={currentStepIndex === 0} className="px-4 text-slate-500 disabled:opacity-0">Back</button>
+      {/* Main Form Content - Now Properly Centered */}
+      <main className="flex-1 flex flex-col items-center bg-slate-50 overflow-y-auto py-12 px-4">
+        <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="p-10">
+            <FormRenderer />
+          </div>
+          <div className="px-8 py-6 bg-slate-50 border-t flex justify-between items-center rounded-b-2xl">
+            <button 
+              onClick={prevStep} 
+              disabled={currentStepIndex === 0} 
+              className="px-4 text-slate-500 font-medium disabled:opacity-0 transition-all"
+            >
+              Back
+            </button>
+            <div className="flex gap-4">
               {currentStepIndex < activeSchema.steps.length - 1 ? (
                 <button 
                   onClick={nextStep} 
                   disabled={!isStepComplete(currentStepIndex)} 
-                  className="px-8 py-2 bg-blue-600 text-white font-bold rounded-lg disabled:bg-slate-200"
+                  className="px-8 py-2 bg-blue-600 text-white font-bold rounded-xl shadow-md disabled:bg-slate-200 disabled:text-slate-400 transition-all"
                 >
-                  Next
+                  Next Step
                 </button>
               ) : (
                 <button 
                   onClick={() => setIsFinished(true)}
                   disabled={!isStepComplete(currentStepIndex)} 
-                  className="px-8 py-2 bg-green-600 text-white font-bold rounded-lg disabled:bg-slate-200"
+                  className="px-8 py-2 bg-green-600 text-white font-bold rounded-xl shadow-md disabled:bg-slate-200 disabled:text-slate-400 transition-all"
                 >
                   Finish
                 </button>
