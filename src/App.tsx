@@ -1,32 +1,38 @@
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
-
-// Simple placeholders to prove navigation works without a server
-const Home = () => (
-  <div className="p-4">
-    <h1 className="text-xl font-bold">Static Support Hub</h1>
-    <Link to="/form/cpu-high" className="text-blue-500 underline">
-      Open CPU Investigation
-    </Link>
-  </div>
-);
-
-const FormRunner = () => (
-  <div className="p-4">
-    <h1 className="text-xl font-bold">Form Runner</h1>
-    <p>Logic loads here. (Refresh me, I still work!)</p>
-  </div>
-);
+// src/App.tsx
+import { useInvestigationStore } from './store/useInvestigationStore';
 
 function App() {
+  const { answers, setAnswer, isStepComplete } = useInvestigationStore();
+
   return (
-    // HashRouter is the key. It uses the # symbol in the URL.
-    // The server ignores everything after #, so it always serves index.html.
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/form/:id" element={<FormRunner />} />
-      </Routes>
-    </HashRouter>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Commit 2 Verification</h1>
+      
+      <div className="space-y-4 border p-4 rounded bg-gray-50">
+        <div>
+          <label className="block font-bold">Test Field (Required):</label>
+          <input 
+            className="border p-2 w-full"
+            onChange={(e) => setAnswer('test_field', e.target.value)} 
+            placeholder="Type something..."
+          />
+        </div>
+
+        <div className="mt-4 p-4 rounded bg-white border">
+          <p><strong>Store Answers:</strong> {JSON.stringify(answers)}</p>
+          <p className="mt-2">
+            <strong>Logic Check:</strong> Is Step Complete? 
+            <span className={answers['test_field'] ? "text-green-600 font-bold" : "text-red-600"}>
+               {answers['test_field'] ? " YES" : " NO (Required field empty)"}
+            </span>
+          </p>
+        </div>
+      </div>
+      
+      <p className="mt-4 text-sm text-gray-500 italic">
+        If the "YES" toggles when you type, your Zustand store and logic are working perfectly.
+      </p>
+    </div>
   );
 }
 
