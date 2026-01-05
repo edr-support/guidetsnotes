@@ -1,5 +1,5 @@
 // src/types/schema.ts
-export type FieldType = 'text' | 'textarea' | 'select' | 'code';
+export type FieldType = 'text' | 'textarea' | 'select' | 'code' | 'image';
 
 export interface Field {
   id: string;
