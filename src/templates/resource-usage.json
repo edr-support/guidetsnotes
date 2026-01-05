@@ -1,0 +1,51 @@
+{
+  "id": "resource-usage-v1",
+  "title": "High Resource Usage",
+  "steps": [
+    {
+      "id": "triage",
+      "title": "1. Initial Triage",
+      "description": "Identify which resource is under pressure.",
+      "fields": [
+        {
+          "id": "resource_type",
+          "label": "Resource Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "label": "CPU", "value": "cpu" },
+            { "label": "Memory (RAM)", "value": "ram" },
+            { "label": "Disk I/O", "value": "disk" }
+          ]
+        },
+        {
+          "id": "hostname",
+          "label": "Affected Hostname",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g. prod-web-01"
+        }
+      ]
+    },
+    {
+      "id": "evidence",
+      "title": "2. Evidence Collection",
+      "description": "Capture system state for the ticket.",
+      "fields": [
+        {
+          "id": "screenshot_upload",
+          "label": "Evidence Screenshot (Task Manager / htop)",
+          "type": "image",
+          "required": false
+        },
+        {
+          "id": "top_output",
+          "label": "Paste 'top' or 'htop' output",
+          "type": "code",
+          "required": true,
+          "placeholder": "Paste terminal output here..."
+        }
+      ]
+    }
+  ]
+}
