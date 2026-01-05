@@ -39,14 +39,21 @@ export const useInvestigationStore = create<InvestigationState>((set, get) => ({
   goToStep: (index) => set({ currentStepIndex: index }),
 
   // A step is complete if all 'required' fields have a value
-  isStepComplete: (stepIndex) => {
-    const state = get();
-    if (!state.activeSchema) return false;
-    const step = state.activeSchema.steps[stepIndex];
-    return step.fields
-      .filter(f => f.required)
-      .every(f => !!state.answers[f.id] && state.answers[f.id] !== '');
-  },
+isStepComplete: (stepIndex) => {
+  const state = get();
+  if (!state.activeSchema) return false;
+  const step = state.activeSchema.steps[stepIndex];
+  
+  // Special logic for Evidence step: Check if either field has data
+  if (step.id === 'evidence') {
+    return !!state.answers['screenshot_upload'] || !!state.answers['top_output'];
+  }
+
+  // Standard logic for other steps: All required must be filled
+  return step.fields
+    .filter(f => f.required)
+    .every(f => !!state.answers[f.id] && state.answers[f.id] !== '');
+},
 
   // A user can access a step if ALL previous steps are complete
   canAccessStep: (stepIndex) => {
