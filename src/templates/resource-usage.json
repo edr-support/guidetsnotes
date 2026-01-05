@@ -4,7 +4,7 @@
   "steps": [
     {
       "id": "triage",
-      "title": "1. Initial Triage",
+      "title": "Initial Triage",
       "description": "Identify which resource is under pressure.",
       "fields": [
         {
@@ -43,7 +43,7 @@
     },
     {
       "id": "evidence",
-      "title": "2. Evidence Collection",
+      "title": "Evidence Collection",
       "description": "Capture system state for the ticket.",
       "fields": [
         {
