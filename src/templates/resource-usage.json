@@ -39,6 +39,29 @@
       ]
     },
     {
+      "id": "conflict_check",
+      "title": "Security Product Check",
+      "description": "Ensure no other products are fighting for control of security services.",
+      "fields": [
+        {
+          "id": "other_security_managed",
+          "label": "Have you confirmed that other security services (AV/Ransomware Detection) are NOT being managed in other products (DRMM/RC/etc)?",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "label": "Yes - Confirmed no conflicts", "value": "yes" },
+            { "label": "No - Other products are managing security", "value": "no" }
+          ]
+        },
+        {
+          "id": "conflict_notes",
+          "label": "Conflict Notes (if any)",
+          "type": "textarea",
+          "placeholder": "List any other security tools present..."
+        }
+      ]
+    },
+    {
       "id": "location_setup",
       "title": "Troubleshooting Location",
       "fields": [
