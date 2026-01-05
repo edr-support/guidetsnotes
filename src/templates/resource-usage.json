@@ -198,24 +198,32 @@
           ]
         },
         {
-          "id": "av_issue",
-          "label": "Does resource use or application incompatibility begin?",
-          "type": "select",
-          "required": true,
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        },
-        {
-          "id": "av_screenshot",
-          "label": "Attach Screenshot",
-          "type": "image"
-        },
-        {
-          "id": "av_logs",
-          "label": "Did you fetch logs?",
-          "type": "select",
-          "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }]
-        }
+      "id": "av_alert",
+      "title": "AV: Alert Only",
+      "fields": [
+        { "id": "av_alert_issue", "label": "Datto AV [Alert Only]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
+        { "id": "av_alert_scr", "label": "Attach screenshot", "type": "image" },
+        { "id": "av_alert_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
+      ]
+    },
+    {
+      "id": "av_rtp",
+      "title": "AV: Real Time Protection",
+      "fields": [
+        { "id": "av_rtp_issue", "label": "Datto AV [Real Time Protection]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
+        { "id": "av_rtp_scr", "label": "Attach screenshot", "type": "image" },
+        { "id": "av_rtp_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
+      ]
+    },
+    {
+      "id": "av_dns",
+      "title": "AV: Protection/DNS Secure",
+      "fields": [
+        { "id": "av_dns_issue", "label": "Datto AV [Real Time Protection/DNS Secure]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
+        { "id": "av_dns_scr", "label": "Attach screenshot", "type": "image" },
+        { "id": "av_dns_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
       ]
     }
   ]
+} ]
 }
