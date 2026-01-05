@@ -182,22 +182,6 @@
       ]
     },
     {
-      "id": "av_policy_test",
-      "title": "Antivirus Policy",
-      "description": "Test Datto AV phases sequentially.",
-      "fields": [
-        {
-          "id": "av_phase",
-          "label": "AV Configuration Attempted",
-          "type": "select",
-          "required": true,
-          "options": [
-            { "label": "Alert Only", "value": "alert" },
-            { "label": "Real Time Protection", "value": "rtp" },
-            { "label": "Protection/DNS Secure", "value": "dns" }
-          ]
-        },
-        {
       "id": "av_alert",
       "title": "AV: Alert Only",
       "fields": [
@@ -211,19 +195,16 @@
       "title": "AV: Real Time Protection",
       "fields": [
         { "id": "av_rtp_issue", "label": "Datto AV [Real Time Protection]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
-        { "id": "av_rtp_scr", "label": "Attach screenshot", "type": "image" },
-        { "id": "av_rtp_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
+        { "id": "av_rtp_scr", "label": "Attach screenshot", "type": "image" }
       ]
     },
     {
       "id": "av_dns",
       "title": "AV: Protection/DNS Secure",
       "fields": [
-        { "id": "av_dns_issue", "label": "Datto AV [Real Time Protection/DNS Secure]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
-        { "id": "av_dns_scr", "label": "Attach screenshot", "type": "image" },
-        { "id": "av_dns_logs", "label": "Did you fetch logs?", "type": "select", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] }
+        { "id": "av_dns_issue", "label": "Datto AV [Protection/DNS Secure]: Does issue begin?", "type": "select", "required": true, "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }] },
+        { "id": "av_dns_scr", "label": "Attach screenshot", "type": "image" }
       ]
     }
   ]
-} ]
 }
