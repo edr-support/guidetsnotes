@@ -42,6 +42,16 @@
       ]
     },
     {
+          "id": "hardware_requirements",
+          "label": "Does the device meet the hardware requirements (https://edr.datto.com/help/Content/01-getting-started/hardware-os-requirements.htm)?",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "label": "Yes - Meets/Exceeds Requirements", "value": "yes" },
+            { "label": "No - Below Minimum Requirements", "value": "no" }
+          ]
+        },
+    {
       "id": "initial_evidence",
       "title": "Initial Evidence",
       "description": "Capture the current system state.",
