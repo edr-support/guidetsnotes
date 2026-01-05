@@ -92,8 +92,8 @@ function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex justify-center p-8 overflow-y-auto">
-        <div className="w-full max-w-2xl">
+      <main className="flex-1 bg-slate-50 overflow-y-auto">
+        <div className="flex flex-col items-center py-12 px-4 min-h-full">
           <div className="bg-white rounded-2xl shadow-sm border border-slate-200">
             <div className="p-10">
               <FormRenderer />
