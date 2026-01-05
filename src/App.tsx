@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useInvestigationStore } from './store/useInvestigationStore';
 import { FormRenderer } from './components/FormRenderer';
 import { InvestigationSchema } from './types/schema';
-// @ts-ignore - Importing JSON directly
+// @ts-ignore
 import resourceUsageSchema from './templates/resource-usage.json';
 
 function App() {
@@ -17,20 +17,19 @@ function App() {
     goToStep 
   } = useInvestigationStore();
 
-  // Load the "Resource Usage" schema automatically on startup
   useEffect(() => {
     setSchema(resourceUsageSchema as InvestigationSchema);
   }, [setSchema]);
 
-  if (!activeSchema) return <div className="p-10 text-center">Loading template...</div>;
+  if (!activeSchema) return <div className="flex justify-center p-10">Loading...</div>;
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans">
-      {/* Sidebar - Navigation Gates */}
-      <aside className="w-72 bg-white border-r border-gray-200 flex flex-col shadow-sm">
-        <div className="p-6 border-b">
-          <h1 className="text-xl font-bold text-slate-800 tracking-tight">SupportGuide</h1>
-          <p className="text-xs text-slate-400 mt-1 uppercase font-semibold">Investigation Wizard</p>
+    <div className="flex h-screen bg-slate-50 font-sans text-slate-900">
+      {/* Sidebar */}
+      <aside className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10">
+        <div className="p-6 border-b border-slate-100">
+          <h1 className="text-xl font-bold tracking-tight text-blue-600">SupportGuide</h1>
+          <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">Investigation Wizard</p>
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
@@ -43,40 +42,41 @@ function App() {
                 key={step.id}
                 disabled={!isAccessible}
                 onClick={() => goToStep(idx)}
-                className={`w-full text-left p-3 rounded-lg text-sm transition-all flex items-center gap-3 ${
+                className={`w-full text-left p-3 rounded-xl text-sm transition-all flex items-center gap-4 ${
                   isActive 
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-200' 
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' 
                     : isAccessible 
                       ? 'text-slate-600 hover:bg-slate-50' 
                       : 'text-slate-300 cursor-not-allowed'
                 }`}
               >
-                <span className={`w-6 h-6 rounded-full flex items-center justify-center border ${
-                  isActive ? 'border-blue-400 bg-blue-500' : 'border-slate-200'
+                <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border ${
+                  isActive ? 'border-blue-300 bg-blue-500' : 'border-slate-200'
                 }`}>
                   {idx + 1}
                 </span>
-                {step.title}
+                <span className="font-medium truncate">{step.title}</span>
               </button>
             );
           })}
         </nav>
       </aside>
 
-      {/* Main Form Area */}
-      <main className="flex-1 overflow-y-auto p-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-8">
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto">
+        <div className="min-h-full flex flex-col items-center justify-start p-8 md:p-12">
+          {/* Form Card */}
+          <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+            <div className="p-8 md:p-10">
               <FormRenderer />
             </div>
 
-            {/* Navigation Footer */}
-            <div className="bg-slate-50 p-6 border-t border-slate-100 flex justify-between items-center">
+            {/* Sticky Footer */}
+            <div className="px-8 py-6 bg-slate-50 border-t border-slate-100 flex justify-between items-center rounded-b-2xl">
               <button 
                 onClick={prevStep}
                 disabled={currentStepIndex === 0}
-                className="px-5 py-2 text-slate-600 font-medium disabled:opacity-30 hover:bg-slate-200 rounded-lg transition-colors"
+                className="px-6 py-2 text-slate-500 font-semibold disabled:opacity-0 hover:text-slate-800 transition-all"
               >
                 Back
               </button>
@@ -86,14 +86,14 @@ function App() {
                   <button 
                     onClick={nextStep}
                     disabled={!isStepComplete(currentStepIndex)}
-                    className="px-8 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-100 disabled:bg-slate-300 disabled:shadow-none hover:bg-blue-700 transition-all"
+                    className="px-8 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-md shadow-blue-100 disabled:bg-slate-200 disabled:shadow-none hover:bg-blue-700 transition-all active:scale-95"
                   >
                     Next Step
                   </button>
                 ) : (
                   <button 
                     disabled={!isStepComplete(currentStepIndex)}
-                    className="px-8 py-2 bg-green-600 text-white font-bold rounded-lg shadow-lg shadow-green-100 disabled:bg-slate-300 disabled:shadow-none hover:bg-green-700 transition-all"
+                    className="px-8 py-2.5 bg-green-600 text-white font-bold rounded-xl shadow-md shadow-green-100 disabled:bg-slate-200 disabled:shadow-none hover:bg-green-700 transition-all active:scale-95"
                   >
                     Finish & Export
                   </button>
@@ -101,6 +101,10 @@ function App() {
               </div>
             </div>
           </div>
+          
+          <p className="mt-8 text-slate-400 text-xs font-medium">
+            All data remains client-side in your browser.
+          </p>
         </div>
       </main>
     </div>
