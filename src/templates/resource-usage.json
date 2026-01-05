@@ -24,6 +24,20 @@
           "type": "text",
           "required": true,
           "placeholder": "e.g. prod-web-01"
+        },
+        {
+          "id": "customer_tenant",
+          "label": "EDR Tenant",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g. cname.infocyte.com"
+        },
+        {
+          "id": "drmm_access",
+          "label": "RMM Support Access",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g. Support Access Expires: "
         }
       ]
     },
